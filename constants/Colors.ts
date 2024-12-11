@@ -17,10 +17,12 @@ export const Colors = {
   },
   dark: {
     text: '#ECEDEE',
-    background: '#151718',
+    background: '#1a1a1a',
+    cardBackground: '#333',
     tint: tintColorDark,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
+    green: 'rgb(84, 255, 85)'
   },
 };
