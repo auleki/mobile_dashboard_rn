@@ -5,6 +5,7 @@ import {generateUniqueColors} from "@/utils/utils"
 import PieChartKeys from "@/components/charts/pie/PieChartKeys";
 import {PieDataType} from "@/types/charts";
 import {API_PIE_DATA} from "@/utils/dataBank";
+import CenterLabel from "@/components/charts/pie/CenterLabel";
 // import {GetData} from "@/services/dashboard.services";
 // import {QueryClient} from "@tanstack/react-query";
 // import {CurrentRenderContext} from "@react-navigation/core";
@@ -17,6 +18,7 @@ export default function MORHoldersChart() {
     const [activePieDataTab, setActivePieDataTab] = useState('')
     const [pieChartKeysData, setPieChartKeysData] = useState<any>([])
     const [chartBackupData, setChartBackupData] = useState<any>([]);
+    const [totalMORHolders, setTotalMORHolders] = useState(0)
 
     // useEffect(() => {
     // generatePieData();
@@ -45,6 +47,8 @@ export default function MORHoldersChart() {
         let formattedChartData: any[] = []
         const uniqueColors = generateUniqueColors(Object.keys(data).length)
         const _dataEntry = Object.entries(data)
+        let _totalMORHolders = 0;
+        // console.log({_dataEntry})
         for (let i = 0; i < _dataEntry.length; i++) {
             if (_dataEntry[i][1] <= 0) continue
 
@@ -57,8 +61,10 @@ export default function MORHoldersChart() {
                 },
                 ...formattedChartData
             ]
+            _totalMORHolders += Number(_dataEntry[i][1])
         }
 
+        setTotalMORHolders(_totalMORHolders)
         setCurrentPieData(formattedChartData)
         setPieChartKeysData(formattedChartData)
         setChartBackupData(formattedChartData)
@@ -112,14 +118,19 @@ export default function MORHoldersChart() {
     ) {
         if (excludedData.includes(id)) {
             // data is hidden -> show the data
-            const returnedData = chartBackupData.filter((cdata: PieDataType) => cdata.id === id)[0]
+            const returnedData: PieDataType[] = chartBackupData.filter((cdata: PieDataType) => cdata.id === id)[0]
+            setTotalMORHolders(total => total + returnedData.value)
             setExcludedData((data: any) => excludedData.filter(_id => _id != id))
             setCurrentPieData((pdata: PieDataType[]) => [...pdata, returnedData])
         } else {
             // data is shown -> hide the data
             if (currentPieData.length === 1) return
-
-            const _filteredPieData = currentPieData.filter((piedata: PieDataType) => piedata.id != id)
+            let _removedData = {}
+            const _filteredPieData = currentPieData.filter((piedata: PieDataType) => {
+                if (piedata.id === id) _removedData = piedata
+                return piedata.id != id
+            })
+            setTotalMORHolders(total => total - _removedData.value)
             setExcludedData(xData => [id, ...xData])
             setCurrentPieData(_filteredPieData)
         }
@@ -138,16 +149,26 @@ export default function MORHoldersChart() {
                     </Text>
                 ))}
             </View>
+            <PieChart
+                data={currentPieData}
+                radius={110}
+                centerLabelComponent={() => (
+                    <CenterLabel
+                        labelText={'Total Holders'}
+                        labelValue={totalMORHolders}
+                    />
+                )}
+                donut
+                isAnimated
+                innerRadius={90}
+                backgroundColor={'#333'}
+                textSize={8}
+                showTooltip
+            />
             <PieChartKeys
                 onPress={chartData.onPress}
                 pieData={pieChartKeysData}
                 excludedChartData={excludedData}
-            />
-            <PieChart
-                data={currentPieData}
-                radius={125}
-                textSize={8}
-                showTooltip
             />
             <Text
                 style={styles.footerTitle}>
@@ -173,6 +194,18 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         gap: 10
+    },
+    centerLabel: {
+        alignItems: 'center'
+    },
+    centerLabelText: {
+        color: '#fff',
+        fontSize: 21
+    },
+    centerLabelValue: {
+        color: '#fff',
+        fontSize: 35,
+        fontWeight: '800'
     },
     dataTab: {
         color: 'gray',

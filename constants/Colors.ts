@@ -19,6 +19,7 @@ export const Colors = {
     text: '#ECEDEE',
     background: '#1a1a1a',
     cardBackground: '#333',
+    fadeText: '#525252',
     tint: tintColorDark,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',

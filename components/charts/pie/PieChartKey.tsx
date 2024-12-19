@@ -1,4 +1,5 @@
 ﻿import {Pressable, StyleSheet, Text, View} from "react-native";
+import {thousandTextParser} from "@/utils/utils";
 
 export default function PieChartKey({range = '100-200', color, onPress, id, isExcluded = false, value}: {
     range: string,
@@ -15,10 +16,20 @@ export default function PieChartKey({range = '100-200', color, onPress, id, isEx
 
     return (
         <Pressable onPress={() => onPress(id)}>
-            <View style={{...styles.keyContainer, backgroundColor: `${isExcluded ? '#1a1a1a' : '#fff'}`}}>
-                <Text style={{...styles.keyLabel, textDecorationLine: `${isExcluded ? 'line-through': 'none'}`}}>{range}</Text>
+            <View style={{...styles.keyContainer, backgroundColor: `${isExcluded ? '#000' : '#525252'}`}}>
+                <Text 
+                    style={{
+                        ...styles.keyLabel, 
+                        color: isExcluded ? '#1a1a1a' : '#fff',
+                        textDecorationLine: `${isExcluded ? 'line-through': 'none'}`}}>
+                    {thousandTextParser(range)}
+                </Text>
                 <View style={{backgroundColor: color, ...styles.chartKey}}/>
-                <Text style={styles.keyValue}>{value?.toLocaleString()}</Text>
+                <Text style={{
+                    ...styles.keyValue,
+                    color: isExcluded ? '#1a1a1a' : '#fff',
+                    textDecorationLine: `${isExcluded ? 'line-through': 'none'}`
+                }}>{value?.toLocaleString()}</Text>
             </View>
         </Pressable>
     )
@@ -34,7 +45,7 @@ const styles = StyleSheet.create({
     keyContainer: {
         cursor: 'pointer',
         display: 'flex',
-        flexDirection: 'column-reverse',
+        flexDirection: 'row-reverse',
         alignItems: 'center',
         gap: 5,
         backgroundColor: "#fff",
@@ -42,9 +53,10 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     keyLabel: {
-        color: "#333"
+        color: "#fff"
     },
     keyValue: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: "#fff"
     }
 })

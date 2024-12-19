@@ -7,6 +7,7 @@ import SecondaryTabSwitch from "@/components/charts/pie/SecondaryTabSwitch";
 import PieChartKeys from "@/components/charts/pie/PieChartKeys";
 import {PieDataType} from "@/types/charts";
 import {API_DISTRO_CHART_DATA} from "@/utils/dataBank";
+import CenterLabel from "@/components/charts/pie/CenterLabel";
 
 
 export default function StakeTimeDistributionChart() {
@@ -19,24 +20,20 @@ export default function StakeTimeDistributionChart() {
     const [activeSecondaryTab, setActiveSecondaryTab] = useState<string>('')
     const [excludedData, setExcludedData] = useState<[]>([])
     const [chartKeys, setChartKeys] = useState<PieDataType[]>([])
-    const [chartBackupData, setChartBackupData] = useState<{}[]>([])
+    const [chartBackupData, setChartBackupData] = useState<PieDataType[]>([])
+    const [totalStakeHolders, setTotalStakeHolders] = useState(0)
 
-    function formatStakeTimeChartData(_chartData?: any): {} {
+    function formatStakeTimeChartData(_activePoolTab: string): {} {
         // console.log({_chartData})
         let _chartValues: {}[] = [];
-        const _currentPoolData = API_DISTRO_CHART_DATA[activePoolTab][activeSecondaryTab],
+        const _currentPoolData = API_DISTRO_CHART_DATA[_activePoolTab][activeSecondaryTab],
             dataKey = 'ranges',
             dataValue = 'frequencies',
             _activePoolChartKeys = _currentPoolData[dataKey],
             _activePoolChartValues = _currentPoolData[dataValue],
             _chartKeys = _activePoolChartKeys.map((data: any) => `${data[0]}${data[1] === null ? "+" : '-' + data[1]}`)
         const _pieChartColors = generateUniqueColors(_activePoolChartValues.length)
-
-        /*
-        * 1. Takes the chart data in the raw form based on the current active pool data
-        * 2. Formats the keys and values, adding the colors and ID to each data
-        * 3. Returns a formatted data for the chart that can then be set as the _currentPoolChartData
-        * */
+        let _totalStakeHolders = 0;
         for (let i = 0; i < _activePoolChartValues.length; i++) {
             _chartValues = [
                 ..._chartValues,
@@ -47,14 +44,35 @@ export default function StakeTimeDistributionChart() {
                     color: _pieChartColors[i]
                 },
             ]
+
+            // _totalStakeHolders += _activePoolChartValues[i]
         }
+        console.log({_chartValues, _activePoolChartValues, })
         // console.log({_currentPoolData, _chartKeys, _chartValues})
         return _chartValues
     }
 
+    function updateTotalStakeHolder(type: 'increment' | 'decrement' | 'reset' | 'init', value: number, currentValue = 0) {
+        if (type === 'increment') {
+            setTotalStakeHolders(currentValue + value)
+        }
+
+        if (type === 'decrement') {
+            setTotalStakeHolders(currentValue - value)
+        }
+
+        if (type === 'reset') {
+            setTotalStakeHolders(0)
+        }
+
+        if (type === 'init') {
+            setTotalStakeHolders(value)
+        }
+    }
+
     function setupStakeTimeChartData(chartData = {}) {
         const chartTabs = Object.keys(chartData)
-        const _activeTab = chartTabs[0]
+        const _activeTab = chartTabs[1]
         const _currentPoolData = API_DISTRO_CHART_DATA[_activeTab]
         const secondaryTabs = Object.keys(_currentPoolData)
         const _activeSecondaryTab = secondaryTabs[0]
@@ -70,9 +88,10 @@ export default function StakeTimeDistributionChart() {
         const _activePoolDataKeys = _currentPoolData[_activeSecondaryTab][dataKey]
         const _activePoolDataValues: [] = _currentPoolData[_activeSecondaryTab][dataValue]
         const pieChartColors = generateUniqueColors(_activePoolDataValues.length)
-
+        let _totalStakeHolders = 0
         const _chartKeys = _activePoolDataKeys.map((data: any) => `${data[0]}${data[1] === null ? "+" : '-' + data[1]}`)
         let _chartValues: [{ color: string; keyValue: any; id: number; value: never }] = [] as any;
+        
         for (let i = 0; i < _activePoolDataValues.length; i++) {
             _chartValues = [
                 ..._chartValues,
@@ -83,11 +102,15 @@ export default function StakeTimeDistributionChart() {
                     color: pieChartColors[i]
                 },
             ]
+
+            _totalStakeHolders += _activePoolDataValues[i]
         }
 
 
-        setActivePoolTab(chartTabs[0])
-        setActiveSecondaryTab(secondaryTabs[0])
+        // setTotalStakeHolders(_totalStakeHolders)
+        updateTotalStakeHolder('init', _totalStakeHolders)
+        setActivePoolTab(_activeTab)
+        setActiveSecondaryTab(_activeSecondaryTab)
         setCurrentPoolChartData(_chartValues)
         setChartKeys(_chartValues)
         setChartBackupData(_chartValues)
@@ -95,15 +118,27 @@ export default function StakeTimeDistributionChart() {
 
     function onTabChange(tab: any) {
         setActivePoolTab(tab)
-        const newChartData = formatStakeTimeChartData()
+        const newChartData: [] = formatStakeTimeChartData(activePoolTab)
+        const _totalStakeHolders = newChartData.reduce((acc: number, data: PieDataType) => acc + data.value, 0);
+
+        // _totalStakeHolders = newChartData
+
+        // for (let i = 0; i < newChartData.length; i++) {
+        //     _totalStakeHolders += newChartData[i]["value"]
+        // }
+        // console.log({newChartData: newChartData[], _totalStakeHolders}, '#########\n')
+        console.log({ _totalStakeHolders, newChartData}, '#########\n')
         setCurrentPoolChartData(newChartData)
+        // updateTotalStakeHolder('init', _totalStakeHolders)
+        setTotalStakeHolders(_totalStakeHolders)
         setChartKeys(newChartData)
         setExcludedData([])
     }
 
     function onSecondaryTabChange(tab: any) {
         setActiveSecondaryTab(tab)
-        const newChartData = formatStakeTimeChartData(currentPoolChartData)
+        const newChartData = formatStakeTimeChartData(activePoolTab)
+
         setCurrentPoolChartData(newChartData)
         setChartKeys(newChartData)
         setExcludedData([])
@@ -112,20 +147,32 @@ export default function StakeTimeDistributionChart() {
     function onKeyToggle(id: number) {
         if (excludedData.includes(id)) {
             // data is hidden -> show the data
-            const returnedData = chartBackupData.filter((cdata: PieDataType) => cdata.id === id)[0]
+            const returnedData: PieDataType = chartBackupData.filter((cdata: PieDataType) => cdata.id === id)[0]
+
+            setTotalStakeHolders(total => total + returnedData.value)
             setExcludedData((data: any) => excludedData.filter(_id => _id != id))
             setCurrentPoolChartData((pdata: PieDataType[]) => [...pdata, returnedData])
         } else {
             // data is shown -> hide the data
             if (currentPoolChartData.length === 1) return
-
-            const _filteredPieData = currentPoolChartData.filter((piedata: PieDataType) => piedata.id != id)
+            let _removedData: PieDataType = {} as PieDataType
+            const _filteredPieData = currentPoolChartData.filter((piedata: PieDataType) => {
+                if (piedata.id === id) _removedData = piedata
+                return piedata.id != id
+            })
+            setTotalStakeHolders(total => total - _removedData.value)
             setExcludedData(xData => [id, ...xData])
             setCurrentPoolChartData(_filteredPieData)
         }
     }
 
     useEffect(() => {
+        const total = currentPoolChartData.reduce((acc: number, item: PieDataType) => acc + item.value, 0)
+        console.log({currentPoolChartData: currentPoolChartData.length, totalStakeHolders, total})
+    }, [currentPoolChartData])
+
+    useEffect(() => {
+        console.log('setting up stake time')
         setupStakeTimeChartData(API_DISTRO_CHART_DATA)
     }, [])
 
@@ -144,7 +191,13 @@ export default function StakeTimeDistributionChart() {
             />
             <PieChart
                 data={currentPoolChartData}
-                radius={125}
+                radius={110}
+                donut
+                centerLabelComponent={() => (
+                    <CenterLabel labelText={'Stake Holders'} labelValue={totalStakeHolders}/>
+                )}
+                backgroundColor={'#333'}
+                innerRadius={90}
                 textSize={8}
                 showTooltip
                 isAnimated={true}

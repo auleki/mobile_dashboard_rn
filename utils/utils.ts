@@ -142,3 +142,57 @@ export function setupStakeTimeChartData(_chartData = {}) {
         secondaryTabs
     }
 }
+
+export function formatThousandParserValue(number: number, decimalPlaces = 1) {
+    // console.log({numb_to_format: number})
+    if (number < 1000) {
+        return number.toString()
+    }
+    
+    const suffixes = [
+        {
+            divisor: 1_000_000_000,
+            suffix: 'B'
+        },
+        {
+            divisor: 1_000_000,
+            suffix: 'M'
+        },
+        {
+            divisor: 1_000,
+            suffix: 'K'
+        }
+    ]
+
+    for (const {divisor, suffix} of suffixes) {
+        if (number >= divisor) {
+            const formattedNum = (number / divisor).toFixed(decimalPlaces)
+            return formattedNum.replace(/\.?0+$/, '') + suffix
+        }
+    }
+
+    return number.toString()
+}
+
+export function thousandTextParser(
+    number: string,
+    decimalPlaces = 1,
+    delimiter: string = '-'
+): string {
+    // split range @ '-' then take min and max 
+    // break down the text (1000 -> 1k) into an array
+    // give back the min and max
+
+    const delimiterExists = String(number).split('').includes(delimiter)
+    if (delimiterExists) {
+        // console.log('Limiter also included within number')    
+        const [min, max] = number.toString().split(delimiter)
+        // sort array based on low to high
+        // console.log({min, max, number})
+        const minFormatted = formatThousandParserValue(Number(min))
+        const maxFormatted = formatThousandParserValue(Number(max))
+        // console.log({minFormatted, maxFormatted})
+        return `${minFormatted}-${maxFormatted}`
+    }
+    return number
+}
