@@ -26,7 +26,7 @@ export default function StakeTimeDistributionChart() {
     function formatStakeTimeChartData(_activePoolTab: string): {} {
         // console.log({_chartData})
         let _chartValues: {}[] = [];
-        const _currentPoolData = API_DISTRO_CHART_DATA[_activePoolTab][activeSecondaryTab],
+        const _currentPoolData = API_DISTRO_CHART_DATA[(_activePoolTab ?? 0)][activeSecondaryTab],
             dataKey = 'ranges',
             dataValue = 'frequencies',
             _activePoolChartKeys = _currentPoolData[dataKey],
@@ -47,7 +47,6 @@ export default function StakeTimeDistributionChart() {
 
             // _totalStakeHolders += _activePoolChartValues[i]
         }
-        console.log({_chartValues, _activePoolChartValues, })
         // console.log({_currentPoolData, _chartKeys, _chartValues})
         return _chartValues
     }
@@ -72,7 +71,7 @@ export default function StakeTimeDistributionChart() {
 
     function setupStakeTimeChartData(chartData = {}) {
         const chartTabs = Object.keys(chartData)
-        const _activeTab = chartTabs[1]
+        const _activeTab = chartTabs[0]
         const _currentPoolData = API_DISTRO_CHART_DATA[_activeTab]
         const secondaryTabs = Object.keys(_currentPoolData)
         const _activeSecondaryTab = secondaryTabs[0]
@@ -108,33 +107,34 @@ export default function StakeTimeDistributionChart() {
 
 
         // setTotalStakeHolders(_totalStakeHolders)
-        updateTotalStakeHolder('init', _totalStakeHolders)
         setActivePoolTab(_activeTab)
         setActiveSecondaryTab(_activeSecondaryTab)
         setCurrentPoolChartData(_chartValues)
         setChartKeys(_chartValues)
         setChartBackupData(_chartValues)
+        updateTotalStakeHolder('init', _totalStakeHolders)
     }
 
     function onTabChange(tab: any) {
         setActivePoolTab(tab)
+    }
+    
+    function updateChartData () {
         const newChartData: [] = formatStakeTimeChartData(activePoolTab)
-        const _totalStakeHolders = newChartData.reduce((acc: number, data: PieDataType) => acc + data.value, 0);
-
-        // _totalStakeHolders = newChartData
-
-        // for (let i = 0; i < newChartData.length; i++) {
-        //     _totalStakeHolders += newChartData[i]["value"]
-        // }
-        // console.log({newChartData: newChartData[], _totalStakeHolders}, '#########\n')
-        console.log({ _totalStakeHolders, newChartData}, '#########\n')
+        const _totalStakeHolders = newChartData.reduce((acc: number, item: PieDataType) => acc + item.value, 0)
         setCurrentPoolChartData(newChartData)
-        // updateTotalStakeHolder('init', _totalStakeHolders)
         setTotalStakeHolders(_totalStakeHolders)
         setChartKeys(newChartData)
         setExcludedData([])
     }
-
+    
+    useEffect(() => {
+        if (activePoolTab) {
+          updateChartData()
+        }
+        
+    }, [activePoolTab, activeSecondaryTab])
+    
     function onSecondaryTabChange(tab: any) {
         setActiveSecondaryTab(tab)
         const newChartData = formatStakeTimeChartData(activePoolTab)
