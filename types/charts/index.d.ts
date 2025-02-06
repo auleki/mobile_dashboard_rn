@@ -22,3 +22,5 @@ export type SecondaryTabSwitchProps = {
     onTabChange: (tab: any) => void,
     activeTab: {}
 }
+
+export type 

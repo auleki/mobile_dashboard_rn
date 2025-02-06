@@ -9,6 +9,7 @@ import StakersOverTimePoolChart from "@/components/charts/StakeOverTimePoolChart
 import TotalCirculatingSupply from "@/components/charts/TotalCirculatingSupply";
 import PriceVolume from "@/components/charts/PriceVolumeChart";
 import TabbedStatCard from "@/components/TabbedStatCard";
+import BarChartTrial from "@/components/charts/BarChartTrial";
 
 export default function ChartList() {
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -29,8 +30,9 @@ export default function ChartList() {
                 <PowerMultiplierDistributionChart />
                 <BurnedLockedMOR />
                 {/*<TotalCirculatingSupply />*/}
+                {/* <BarChartTrial /> */}
                 {/*<StakersOverTimePoolChart />*/}
-                {/*<PriceVolume />*/}    
+                {/*<PriceVolume />    */}
             </View>
             
         </Animated.ScrollView>

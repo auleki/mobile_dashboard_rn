@@ -5265,15 +5265,17 @@ export const API_PIE_DATA = {
 
 export const TOTAL_SUPPLY_CHART_TABS = [
     {
-        id: 1,
-        title: 'Total Supply',
-        accessor: 'total_supply',
-        hideData: false
-    },
-    {
         id: 2,
         title: 'Circulating Supply',
         accessor: 'circulating_supply',
-        hideData: false
-    }
+        hideData: false,
+        bgColor: 'green'
+    },
+    {
+        id: 1,
+        title: 'Non-Circulating Supply',
+        accessor: 'total_supply',
+        hideData: false,
+        bgColor: 'tomato'
+    },
 ]
