@@ -1,10 +1,10 @@
-﻿import {Text, View, StyleSheet} from "react-native";
-import {PieChart} from 'react-native-gifted-charts'
-import {useEffect, useState} from "react";
-import {generateUniqueColors} from "@/utils/utils"
+﻿import { Text, View, StyleSheet } from "react-native";
+import { PieChart } from 'react-native-gifted-charts'
+import { useEffect, useState } from "react";
+import { generateUniqueColors } from "@/utils/utils"
 import PieChartKeys from "@/components/charts/pie/PieChartKeys";
-import {PieDataType} from "@/types/charts";
-import {API_PIE_DATA} from "@/utils/dataBank";
+import { PieDataType } from "@/types/charts";
+import { API_PIE_DATA } from "@/utils/dataBank";
 import CenterLabel from "@/components/charts/pie/CenterLabel";
 // import {GetData} from "@/services/dashboard.services";
 // import {QueryClient} from "@tanstack/react-query";
@@ -33,12 +33,12 @@ export default function MORHoldersChart() {
 
     const chartData = {
         pieData: [
-            {id: 1, value: 3350, color: 'rgb(154,162,255)', keyValue: '0-50'},
-            {id: 2, value: 205, color: '#f3455a', keyValue: '50-100'},
-            {id: 3, value: 168, color: '#736bee', keyValue: '100-200'},
-            {id: 4, value: 147, color: '#cc88c0', keyValue: '200-500'},
-            {id: 5, value: 80, color: '#b1d273', keyValue: '500-1000'},
-            {id: 6, value: 116, color: '#615f7a', keyValue: '1000-10000'},
+            { id: 1, value: 3350, color: 'rgb(154,162,255)', keyValue: '0-50' },
+            { id: 2, value: 205, color: '#f3455a', keyValue: '50-100' },
+            { id: 3, value: 168, color: '#736bee', keyValue: '100-200' },
+            { id: 4, value: 147, color: '#cc88c0', keyValue: '200-500' },
+            { id: 5, value: 80, color: '#b1d273', keyValue: '500-1000' },
+            { id: 6, value: 116, color: '#615f7a', keyValue: '1000-10000' },
         ],
         onPress: toggleDataInclusion
     }
@@ -70,7 +70,6 @@ export default function MORHoldersChart() {
         setChartBackupData(formattedChartData)
     }
 
-
     function changeActiveTab(key: string) {
         if (key === activePieDataTab) return // don't switch tabs if key matches active
         // console.log('Changing tab to ' + key)
@@ -88,7 +87,7 @@ export default function MORHoldersChart() {
         const keys = Object.keys(pieData)
         // console.log({keys})
 
-        // set the pie data tabs && 
+        // set the pie data tabs &&
         // ensure a key has data above 0 else it should not be visible in the chart
         setPieDataTabs(keys)
 
@@ -98,13 +97,13 @@ export default function MORHoldersChart() {
         formatDataForPieChart(API_PIE_DATA[all])
     }
 
-// function updateChartData() {
-//     // loop through current data & excluded data
-//     let chartdata = [...currentPieData]
-// }
+    // function updateChartData() {
+    //     // loop through current data & excluded data
+    //     let chartdata = [...currentPieData]
+    // }
 
     useEffect(() => {
-        // const url = 'https://morpheus-ai-metrics-a9febnfedac6a6fx.centralus-01.azurewebsites.net/get_stake_info'        
+        // const url = 'https://morpheus-ai-metrics-a9febnfedac6a6fx.centralus-01.azurewebsites.net/get_stake_info'
         createPieDataTabs(API_PIE_DATA)
     }, []);
 

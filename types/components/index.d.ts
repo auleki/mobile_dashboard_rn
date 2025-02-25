@@ -4,4 +4,5 @@ export type PieChartKeysType = {
     pieData: PieDataType[];
     onPress?: Function;
     excludedChartData: number[];
+    total: number
 }

@@ -1,54 +1,54 @@
-﻿import {Pressable, StyleSheet, Text, View} from "react-native";
-import {Colors} from "@/constants/Colors";
+﻿import { Pressable, StyleSheet, Text, View, Dimensions } from "react-native";
 import StatCardTab from "@/components/StatCardTab";
 import StatCardTabHead from "@/components/StatCardTabHead";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { Skeleton } from '@rneui/themed';
+import { LinearGradient } from 'expo-linear-gradient';
+import { transformNumber } from "@/utils/utils";
+import SkeletonLoader from "./ui/loaders/SkeletonLoader";
 
-const STAT_CARD_DATA = [
-    {
-        title: 'Total Supply Market Cap',
-        value: 57829800.9329,
-        tabTitle: 'Total Supply'
-    },
-    {
-        title: 'Circulating Supply Market Cap',
-        value: 20889180.4184,
-        tabTitle: 'Circulating Supply'
-    }
-]
+type Props = {
+    stats: any[];
+    isLoading: boolean;
+}
 
-// {
-//     "total_supply_market_cap": 57829800.9329,
-//     "circulating_supply_market_cap": 20889180.4184
-// }
+const { width } = Dimensions.get('screen')
 
-export default function TabbedStatCard() {
+export default function TabbedStatCard({ stats, isLoading = true }: Props) {
     const [activeTab, setActiveTab] = useState({})
-    
+
     function switchTab(tab: {}) {
         setActiveTab(tab)
     }
 
     useEffect(() => {
-        setActiveTab(STAT_CARD_DATA[1])
-    }, []);
-    
+        setActiveTab(stats[0])
+    }, [stats]);
+
+    if (isLoading) return (
+        <SkeletonLoader />
+    )
+
     return (
         <View style={styles.container}>
             <View style={styles.tabHeads}>
-                {/*<Text style={{fontSize: 14, color: '#525252'}}>Total Supply Market Cap</Text>*/}
-                {/*<Text style={{fontSize: 21, color: '#fff'}}>Circulating Supply Market Cap</Text>*/}
-                {STAT_CARD_DATA.map((tab, index) =>
-                    <Pressable key={index} onPress={() => switchTab(tab)} style={{paddingVertical: 5}}>
-                        <StatCardTabHead isActive={tab.title === activeTab?.title} title={tab.title} value={tab.value} tabTitle={tab.tabTitle} />
+                {stats.map((tab, index) =>
+                    <Pressable
+                        key={index}
+                        onPress={() => switchTab(tab)}
+                        style={{ paddingVertical: 5 }}
+                    >
+                        <StatCardTabHead
+                            isActive={tab.title === activeTab?.title}
+                            title={tab.title}
+                            value={tab.value}
+                            tabTitle={tab.tabTitle}
+                        />
                     </Pressable>
                 )}
             </View>
             <View style={styles.tabContent}>
-                {/*{STAT_CARD_DATA.map((tab, index) => (*/}
-                {/*    <StatCardTab title={tab.title} value={tab.value.toLocaleString()} suffix={'MOR'} key={index} />*/}
-                {/*))}*/}
-                {activeTab && <StatCardTab title={activeTab?.title} value={activeTab?.value?.toLocaleString()} suffix={'MOR'} />}
+                {activeTab && <StatCardTab title={activeTab?.title} value={transformNumber(activeTab?.value)} prefix={'$ '} />}
             </View>
         </View>
     )
@@ -56,9 +56,11 @@ export default function TabbedStatCard() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: Colors.dark.cardBackground,
+        backgroundColor: "#fff",
         padding: 10,
-        borderRadius: 5
+        borderWidth: 2,
+        borderRadius: 13,
+        borderColor: "#ddd"
     },
     tabHeads: {
         flexDirection: 'row',
@@ -70,5 +72,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: "center",
         gap: 10,
-    }
+    },
+
 })

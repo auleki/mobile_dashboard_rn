@@ -1,4 +1,28 @@
-﻿import {BurnedLockedTabsType} from "@/types/charts";
+﻿import { DASH_CHART_SECTIONS } from "@/constants/Links";
+import { BurnedLockedTabsType } from "@/types/charts";
+
+export const DASHBOARD_TABS = [
+    {
+        title: 'Supply',
+        pathname: DASH_CHART_SECTIONS.SUPPLY,
+        id: 1,
+    },
+    {
+        title: 'Staking',
+        pathname: DASH_CHART_SECTIONS.STAKING,
+        id: 2,
+    },
+    {
+        title: 'Capital',
+        pathname: DASH_CHART_SECTIONS.CAPITAL,
+        id: 3,
+    },
+    {
+        title: 'Code',
+        pathname: DASH_CHART_SECTIONS.CODE,
+        id: 4,
+    }
+]
 
 export const API_DISTRO_CHART_DATA = {
     "combined": {
@@ -5276,4 +5300,39 @@ export const TOTAL_SUPPLY_CHART_TABS = [
         accessor: 'circulating_supply',
         hideData: false
     }
+]
+
+
+export const STAT_CARD_DATA = [
+    {
+        title: 'Total Supply Market Cap',
+        value: 57829800.9329,
+        tabTitle: 'Total'
+    },
+    {
+        title: 'Circulating Supply Market Cap',
+        value: 20889180.4184,
+        tabTitle: 'Circulating'
+    }
+]
+
+export const LIQUIDITY_STATS = [
+    {
+        title: 'Protocol-Owned Liquidity Value USD',
+        key: 'total_value_usd',
+        value: null,
+        tabTitle: 'PoL Value USD'
+    },
+    {
+        title: 'Protocol-Owned Liquidity Amount MOR',
+        value: null,
+        key: 'mor_value',
+        tabTitle: 'MOR PoL'
+    },
+    {
+        title: 'Protocol-Owned Liquidity Amount stETH',
+        value: null,
+        key: 'steth_value',
+        tabTitle: 'wETH PoL'
+    },
 ]

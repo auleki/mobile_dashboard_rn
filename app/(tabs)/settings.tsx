@@ -1,7 +1,8 @@
-﻿import {IconSymbol} from "@/components/ui/IconSymbol";
-import {ThemedText} from "@/components/ThemedText";
+﻿import { IconSymbol } from "@/components/ui/IconSymbol";
+import { ThemedText } from "@/components/ThemedText";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
+import OldChartList from "@/components/charts/OldChartList";
 
 export default function Settings() {
     return (
@@ -15,7 +16,8 @@ export default function Settings() {
                     style={styles.headerImage}
                 />
             }>
-            <ThemedText style={{color:'white'}}>Settings</ThemedText>
+            {/* <ThemedText style={{ color: 'white' }}>Settings</ThemedText> */}
+            <OldChartList />
         </ParallaxScrollView>
     )
 }

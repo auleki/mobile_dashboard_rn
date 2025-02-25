@@ -1,12 +1,12 @@
-﻿import {Text, View, StyleSheet} from "react-native";
-import {useEffect, useState} from "react";
-import {generateUniqueColors} from "@/utils/utils";
-import {PieChart} from "react-native-gifted-charts";
+﻿import { Text, View, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import { generateUniqueColors } from "@/utils/utils";
+import { PieChart } from "react-native-gifted-charts";
 import PieDataTabsList from "@/components/charts/pie/PieDataTabsList";
 import SecondaryTabSwitch from "@/components/charts/pie/SecondaryTabSwitch";
 import PieChartKeys from "@/components/charts/pie/PieChartKeys";
-import {PieDataType} from "@/types/charts";
-import {API_DISTRO_CHART_DATA} from "@/utils/dataBank";
+import { PieDataType } from "@/types/charts";
+import { API_DISTRO_CHART_DATA } from "@/utils/dataBank";
 import CenterLabel from "@/components/charts/pie/CenterLabel";
 
 
@@ -90,7 +90,7 @@ export default function StakeTimeDistributionChart() {
         let _totalStakeHolders = 0
         const _chartKeys = _activePoolDataKeys.map((data: any) => `${data[0]}${data[1] === null ? "+" : '-' + data[1]}`)
         let _chartValues: [{ color: string; keyValue: any; id: number; value: never }] = [] as any;
-        
+
         for (let i = 0; i < _activePoolDataValues.length; i++) {
             _chartValues = [
                 ..._chartValues,
@@ -118,8 +118,8 @@ export default function StakeTimeDistributionChart() {
     function onTabChange(tab: any) {
         setActivePoolTab(tab)
     }
-    
-    function updateChartData () {
+
+    function updateChartData() {
         const newChartData: [] = formatStakeTimeChartData(activePoolTab)
         const _totalStakeHolders = newChartData.reduce((acc: number, item: PieDataType) => acc + item.value, 0)
         setCurrentPoolChartData(newChartData)
@@ -127,14 +127,14 @@ export default function StakeTimeDistributionChart() {
         setChartKeys(newChartData)
         setExcludedData([])
     }
-    
+
     useEffect(() => {
         if (activePoolTab) {
-          updateChartData()
+            updateChartData()
         }
-        
+
     }, [activePoolTab, activeSecondaryTab])
-    
+
     function onSecondaryTabChange(tab: any) {
         setActiveSecondaryTab(tab)
         const newChartData = formatStakeTimeChartData(activePoolTab)
@@ -168,11 +168,11 @@ export default function StakeTimeDistributionChart() {
 
     useEffect(() => {
         const total = currentPoolChartData.reduce((acc: number, item: PieDataType) => acc + item.value, 0)
-        console.log({currentPoolChartData: currentPoolChartData.length, totalStakeHolders, total})
+        // console.log({currentPoolChartData: currentPoolChartData.length, totalStakeHolders, total})
     }, [currentPoolChartData])
 
     useEffect(() => {
-        console.log('setting up stake time')
+        // console.log('setting up stake time')
         setupStakeTimeChartData(API_DISTRO_CHART_DATA)
     }, [])
 
@@ -194,7 +194,7 @@ export default function StakeTimeDistributionChart() {
                 radius={110}
                 donut
                 centerLabelComponent={() => (
-                    <CenterLabel labelText={'Stake Holders'} labelValue={totalStakeHolders}/>
+                    <CenterLabel labelText={'Stake Holders'} labelValue={totalStakeHolders} />
                 )}
                 backgroundColor={'#333'}
                 innerRadius={90}
