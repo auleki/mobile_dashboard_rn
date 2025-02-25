@@ -1,6 +1,6 @@
-import {Image, StyleSheet, Platform, View, Text, SafeAreaView} from 'react-native';
-import {IconSymbol} from "@/components/ui/IconSymbol";
-import {ThemedText} from "@/components/ThemedText";
+import { Image, StyleSheet, Platform, View, Text, SafeAreaView } from 'react-native';
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import { ThemedText } from "@/components/ThemedText";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import ChartList from "@/components/charts/ChartList";
 
@@ -16,7 +16,7 @@ export default function HomeScreen() {
                     style={styles.headerImage}
                 />
             }>
-            <ThemedText type={'title'} style={{color:'white'}}>Dashboard</ThemedText>
+            <ThemedText type={'title'} style={{ color: 'black' }}>Dashboard</ThemedText>
             <ChartList />
         </ParallaxScrollView>
     );

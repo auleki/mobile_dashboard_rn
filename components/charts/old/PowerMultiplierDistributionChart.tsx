@@ -1,13 +1,13 @@
-﻿import {Text, View, StyleSheet} from "react-native";
-import {YAxis} from "react-native-svg-charts";
-import {useEffect, useState} from "react";
-import {formatStakeTimeChartData, setupStakeTimeChartData} from "@/utils/utils"
+﻿import { Text, View, StyleSheet } from "react-native";
+import { YAxis } from "react-native-svg-charts";
+import { useEffect, useState } from "react";
+import { formatStakeTimeChartData, setupStakeTimeChartData } from "@/utils/utils"
 import PieChartKeys from "@/components/charts/pie/PieChartKeys";
-import {PieChart} from "react-native-gifted-charts";
+import { PieChart } from "react-native-gifted-charts";
 import PieDataTabsList from "@/components/charts/pie/PieDataTabsList";
 import SecondaryTabSwitch from "@/components/charts/pie/SecondaryTabSwitch";
-import {PieDataType} from "@/types/charts";
-import {POWER_MULTIPLIER_DISTRO_CHART_DATA} from "@/utils/dataBank";
+import { PieDataType } from "@/types/charts";
+import { POWER_MULTIPLIER_DISTRO_CHART_DATA } from "@/utils/dataBank";
 
 export default function PowerMultiplierDistributionChart() {
     const [pieData, setPieData] = useState<any>([])
@@ -47,7 +47,7 @@ export default function PowerMultiplierDistributionChart() {
 
     function onSecondaryTabChange(tab: any) {
         setActiveSecondaryTab(tab)
-        console.log({activePoolTab, activeSecondaryTab})
+        // console.log({activePoolTab, activeSecondaryTab})
         const newChartData = formatStakeTimeChartData(POWER_MULTIPLIER_DISTRO_CHART_DATA, activePoolTab, activeSecondaryTab)
         setCurrentPoolChartData(newChartData)
         setChartKeys(newChartData)

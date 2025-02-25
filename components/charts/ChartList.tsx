@@ -1,18 +1,39 @@
-﻿import {StyleSheet, Text, View} from 'react-native'
-import Animated, {useAnimatedRef} from "react-native-reanimated";
-import {useBottomTabOverflow} from "@/components/ui/TabBarBackground";
-import PowerMultiplierDistributionChart from "@/components/charts/PowerMultiplierDistributionChart";
-import StakeTimeDistributionChart from "@/components/charts/StakeTimeDistributionChart";
-import MORHoldersChart from "@/components/charts/MORHoldersChart";
-import BurnedLockedMOR from "@/components/charts/BurnedLockedMORChart";
-import StakersOverTimePoolChart from "@/components/charts/StakeOverTimePoolChart";
-import TotalCirculatingSupply from "@/components/charts/TotalCirculatingSupply";
-import PriceVolume from "@/components/charts/PriceVolumeChart";
-import TabbedStatCard from "@/components/TabbedStatCard";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { useBottomTabOverflow } from "../ui/TabBarBackground";
+import { StyleSheet, Text, View } from "react-native";
+import SupplyCharts from "./supply";
+import DashboardTabs from "../navigation/DashboardTabs";
+import DashboardContent from "../navigation/DashboardContent";
+import StakingCharts from "./staking";
+import CapitalCharts from "./capital";
+import CodeCharts from "./code";
+import { useEffect, useState } from "react";
+import { DASHBOARD_TABS } from "@/utils/dataBank";
+import { DASH_CHART_SECTIONS } from "@/constants/Links";
+import Footer from "../ui/Footer";
+
 
 export default function ChartList() {
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
     const bottom = useBottomTabOverflow();
+    const [activeTab, setActiveTab] = useState<number>(1)
+    const [dashTabs, setDashTabs] = useState<any[]>([])
+
+    useEffect(() => {
+        setDashTabs(DASHBOARD_TABS)
+    }, [])
+
+    function updateActiveTabPosition() {
+        const currentTab = DASHBOARD_TABS.filter(tab => tab.id === activeTab)[0]
+        const shiftSelectedTab = [currentTab, ...DASHBOARD_TABS.filter(tab => tab.id !== activeTab)]
+        setDashTabs(shiftSelectedTab)
+    }
+
+    useEffect(() => updateActiveTabPosition(), [activeTab])
+
+    // Move selected tab to the first position
+    const switchTab = (id: number) => setActiveTab(id)
+
     return (
         <Animated.ScrollView
             ref={scrollRef}
@@ -21,21 +42,21 @@ export default function ChartList() {
             scrollIndicatorInsets={{ bottom }}
             contentContainerStyle={{ paddingBottom: bottom }}
         >
-            {/*<Text style={{color: 'white'}}>ChartList</Text>*/}
             <View style={styles.chartContainer}>
-                <TabbedStatCard />
-                <MORHoldersChart />
-                <StakeTimeDistributionChart />
-                <PowerMultiplierDistributionChart />
-                <BurnedLockedMOR />
-                {/*<TotalCirculatingSupply />*/}
-                {/*<StakersOverTimePoolChart />*/}
-                {/*<PriceVolume />*/}    
+                <DashboardTabs
+                    tabs={dashTabs}
+                    activeTabId={activeTab}
+                    onTabClick={switchTab}
+                />
+                <DashboardContent
+                    activeTabId={activeTab}
+                />
             </View>
-            
+            <Footer />
         </Animated.ScrollView>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {

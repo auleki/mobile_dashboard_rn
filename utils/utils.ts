@@ -16,12 +16,12 @@ export function generateDates(days: number = 0) {
 export function includeDateWithData(data = [{}]) {
     // console.log('include with data')
     const dateList = generateDates(data.length)
-    console.log({dateList, data})
+    // console.log({dateList, data})
     for (let i = 0; i < data.length; i++) {
         const currentData = data[i]
-        data[i] = {...currentData, label: dateList[i]}
+        data[i] = { ...currentData, label: dateList[i] }
     }
-    console.log({data})
+    // console.log({data})
     return data
 }
 
@@ -148,7 +148,7 @@ export function formatThousandParserValue(number: number, decimalPlaces = 1) {
     if (number < 1000) {
         return number.toString()
     }
-    
+
     const suffixes = [
         {
             divisor: 1_000_000_000,
@@ -164,7 +164,7 @@ export function formatThousandParserValue(number: number, decimalPlaces = 1) {
         }
     ]
 
-    for (const {divisor, suffix} of suffixes) {
+    for (const { divisor, suffix } of suffixes) {
         if (number >= divisor) {
             const formattedNum = (number / divisor).toFixed(decimalPlaces)
             return formattedNum.replace(/\.?0+$/, '') + suffix
@@ -179,13 +179,13 @@ export function thousandTextParser(
     decimalPlaces = 1,
     delimiter: string = '-'
 ): string {
-    // split range @ '-' then take min and max 
+    // split range @ '-' then take min and max
     // break down the text (1000 -> 1k) into an array
     // give back the min and max
 
     const delimiterExists = String(number).split('').includes(delimiter)
     if (delimiterExists) {
-        // console.log('Limiter also included within number')    
+        // console.log('Limiter also included within number')
         const [min, max] = number.toString().split(delimiter)
         // sort array based on low to high
         // console.log({min, max, number})
@@ -195,4 +195,13 @@ export function thousandTextParser(
         return `${minFormatted}-${maxFormatted}`
     }
     return number
+}
+
+export function calculatePercentage(numerator: number, denominator: number) {
+    return Number((numerator / denominator) * 100).toPrecision(2)
+}
+
+export function transformNumber(val: string) {
+    const roundedUp = Number(val).toFixed(2)
+    return Number(roundedUp).toLocaleString()
 }

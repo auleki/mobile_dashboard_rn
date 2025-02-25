@@ -1,10 +1,10 @@
-﻿import {Text, View, StyleSheet, Dimensions} from "react-native";
-import {Grid, StackedAreaChart, XAxis, YAxis} from "react-native-svg-charts";
+﻿import { Text, View, StyleSheet, Dimensions } from "react-native";
+import { Grid, StackedAreaChart, XAxis, YAxis } from "react-native-svg-charts";
 import * as shape from 'd3-shape'
-import {LineChart} from "react-native-gifted-charts";
+import { LineChart } from "react-native-gifted-charts";
 // import {AreaChart} from "recharts";
-import {useEffect, useState} from "react";
-import {TOTAL_SUPPLY_CHART_DATA, TOTAL_SUPPLY_CHART_TABS} from "@/utils/dataBank";
+import { useEffect, useState } from "react";
+import { TOTAL_SUPPLY_CHART_DATA, TOTAL_SUPPLY_CHART_TABS } from "@/utils/dataBank";
 
 export default function TotalCirculatingSupply() {
     const [chartTabs, setChartTabs] = useState([])
@@ -12,10 +12,10 @@ export default function TotalCirculatingSupply() {
     const [circulatingSupplyData, setCirculatingSupplyData] = useState([])
     const [totalSupplyData, setTotalSupplyData] = useState([])
     const [xAxisLabels, setXAxisLabels] = useState([])
-    const [visibleCharts, setVisibleCharts] = useState( )
+    const [visibleCharts, setVisibleCharts] = useState()
 
     function formatSupplyChartData(data: {}[]) {
-        // the keys are the dates 
+        // the keys are the dates
         // values for circulating supply are extracted as data 0
         // values for total supply are extracted as data 1
         // user can toggle between
@@ -30,22 +30,22 @@ export default function TotalCirculatingSupply() {
             }
         })
         // console.log({data: _data.map(item => item.date)})
-        setCirculatingSupplyData(_data.map(item => ({date: item.date, value: item.circulatingSupply})).splice(0, 50))
-        setTotalSupplyData(_data.map(item => ({date: item.date, value: item.totalSupply})).splice(0, 50))
+        setCirculatingSupplyData(_data.map(item => ({ date: item.date, value: item.circulatingSupply })).splice(0, 50))
+        setTotalSupplyData(_data.map(item => ({ date: item.date, value: item.totalSupply })).splice(0, 50))
     }
 
     useEffect(() => {
         formatSupplyChartData(TOTAL_SUPPLY_CHART_DATA['data'])
     }, []);
 
-    useEffect(() => {
-        console.log({circulatingSupplyData, totalSupplyData})
-    }, [circulatingSupplyData, totalSupplyData]);
+    // useEffect(() => {
+    //     // console.log({circulatingSupplyData, totalSupplyData})
+    // }, [circulatingSupplyData, totalSupplyData]);
 
     const customLabel = val => {
         return (
-            <View style={{width: 70, marginLeft: 7}}>
-                <Text style={{color: 'white', fontWeight: 'bold'}}>{val}</Text>
+            <View style={{ width: 70, marginLeft: 7 }}>
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>{val}</Text>
             </View>
         );
     };
@@ -62,59 +62,59 @@ export default function TotalCirculatingSupply() {
     }
 
     const ptData = [
-        {value: 160, date: '1 Apr 2022'},
-        {value: 180, date: '2 Apr 2022'},
-        {value: 190, date: '3 Apr 2022'},
-        {value: 180, date: '4 Apr 2022'},
-        {value: 140, date: '5 Apr 2022'},
-        {value: 145, date: '6 Apr 2022'},
-        {value: 160, date: '7 Apr 2022'},
-        {value: 200, date: '8 Apr 2022'},
+        { value: 160, date: '1 Apr 2022' },
+        { value: 180, date: '2 Apr 2022' },
+        { value: 190, date: '3 Apr 2022' },
+        { value: 180, date: '4 Apr 2022' },
+        { value: 140, date: '5 Apr 2022' },
+        { value: 145, date: '6 Apr 2022' },
+        { value: 160, date: '7 Apr 2022' },
+        { value: 200, date: '8 Apr 2022' },
 
-        {value: 220, date: '9 Apr 2022'},
+        { value: 220, date: '9 Apr 2022' },
         {
             value: 240,
             date: '10 Apr 2022',
             label: '10 Apr',
-            labelTextStyle: {color: 'lightgray', width: 60},
+            labelTextStyle: { color: 'lightgray', width: 60 },
         },
-        {value: 280, date: '11 Apr 2022'},
-        {value: 260, date: '12 Apr 2022'},
-        {value: 340, date: '13 Apr 2022'},
-        {value: 385, date: '14 Apr 2022'},
-        {value: 280, date: '15 Apr 2022'},
-        {value: 390, date: '16 Apr 2022'},
+        { value: 280, date: '11 Apr 2022' },
+        { value: 260, date: '12 Apr 2022' },
+        { value: 340, date: '13 Apr 2022' },
+        { value: 385, date: '14 Apr 2022' },
+        { value: 280, date: '15 Apr 2022' },
+        { value: 390, date: '16 Apr 2022' },
 
-        {value: 370, date: '17 Apr 2022'},
-        {value: 285, date: '18 Apr 2022'},
-        {value: 295, date: '19 Apr 2022'},
+        { value: 370, date: '17 Apr 2022' },
+        { value: 285, date: '18 Apr 2022' },
+        { value: 295, date: '19 Apr 2022' },
         {
             value: 300,
             date: '20 Apr 2022',
             label: '20 Apr',
-            labelTextStyle: {color: 'lightgray', width: 60},
+            labelTextStyle: { color: 'lightgray', width: 60 },
         },
-        {value: 280, date: '21 Apr 2022'},
-        {value: 295, date: '22 Apr 2022'},
-        {value: 260, date: '23 Apr 2022'},
-        {value: 255, date: '24 Apr 2022'},
+        { value: 280, date: '21 Apr 2022' },
+        { value: 295, date: '22 Apr 2022' },
+        { value: 260, date: '23 Apr 2022' },
+        { value: 255, date: '24 Apr 2022' },
 
-        {value: 190, date: '25 Apr 2022'},
-        {value: 220, date: '26 Apr 2022'},
-        {value: 205, date: '27 Apr 2022'},
-        {value: 230, date: '28 Apr 2022'},
-        {value: 210, date: '29 Apr 2022'},
+        { value: 190, date: '25 Apr 2022' },
+        { value: 220, date: '26 Apr 2022' },
+        { value: 205, date: '27 Apr 2022' },
+        { value: 230, date: '28 Apr 2022' },
+        { value: 210, date: '29 Apr 2022' },
         {
             value: 200,
             date: '30 Apr 2022',
             label: '30 Apr',
-            labelTextStyle: {color: 'lightgray', width: 60},
+            labelTextStyle: { color: 'lightgray', width: 60 },
         },
-        {value: 240, date: '1 May 2022'},
-        {value: 250, date: '2 May 2022'},
-        {value: 280, date: '3 May 2022'},
-        {value: 250, date: '4 May 2022'},
-        {value: 210, date: '5 May 2022'},
+        { value: 240, date: '1 May 2022' },
+        { value: 250, date: '2 May 2022' },
+        { value: 280, date: '3 May 2022' },
+        { value: 250, date: '4 May 2022' },
+        { value: 210, date: '5 May 2022' },
     ];
 
     const ptDataTwo = ptData.map(item => {
@@ -149,7 +149,7 @@ export default function TotalCirculatingSupply() {
             <View style={styles.chartTabs}>
                 {TOTAL_SUPPLY_CHART_TABS.map((tab: {}, index) => (
                     <View style={styles.chartTab} key={index}>
-                        <View style={styles.keyIndicator}/>
+                        <View style={styles.keyIndicator} />
                         <Text style={styles.tabTitle}>{tab?.title}</Text>
                     </View>
                 ))}
@@ -182,7 +182,7 @@ export default function TotalCirculatingSupply() {
                 yAxisThickness={0}
                 rulesType="solid"
                 rulesColor="gray"
-                yAxisTextStyle={{color: 'gray'}}
+                yAxisTextStyle={{ color: 'gray' }}
                 yAxisSide='right'
                 xAxisColor="lightgray"
                 pointerConfig={{
@@ -205,7 +205,7 @@ export default function TotalCirculatingSupply() {
                                     marginTop: -30,
                                     marginLeft: -40,
                                 }}>
-                                <Text style={{color: 'white', fontSize: 14, marginBottom: 6, textAlign: 'center'}}>
+                                <Text style={{ color: 'white', fontSize: 14, marginBottom: 6, textAlign: 'center' }}>
                                     {items[0].date}
                                 </Text>
 
@@ -215,7 +215,7 @@ export default function TotalCirculatingSupply() {
                                     borderRadius: 16,
                                     backgroundColor: 'white'
                                 }}>
-                                    <Text style={{fontWeight: 'bold', textAlign: 'center'}}>
+                                    <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>
                                         {'$' + items[0].value + '.0'}
                                     </Text>
                                 </View>

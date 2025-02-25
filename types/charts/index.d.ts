@@ -22,3 +22,16 @@ export type SecondaryTabSwitchProps = {
     onTabChange: (tab: any) => void,
     activeTab: {}
 }
+
+export type DataTabType = {
+    id: number;
+    title: string
+}
+
+export type TabDataType = {
+    tabTitle: string;
+    id: number;
+    accessor?: string;
+    value?: string | number
+    deepaccessor?: string
+}

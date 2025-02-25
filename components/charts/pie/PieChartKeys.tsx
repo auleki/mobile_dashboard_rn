@@ -1,14 +1,17 @@
-﻿import {StyleSheet, Text, View} from "react-native";
+﻿import { StyleSheet, Text, View } from "react-native";
 import PieChartKey from "@/components/charts/pie/PieChartKey";
-import {PieDataType} from "@/types/charts";
-import {PieChartKeysType} from "@/types/components";
+import { PieDataType } from "@/types/charts";
+import { PieChartKeysType } from "@/types/components";
 
-export default function PieChartKeys({pieData, onPress, excludedChartData}: PieChartKeysType) {
+export default function PieChartKeys({ pieData, onPress, excludedChartData, total }: PieChartKeysType) {
+    // console.log({ pieData });
+
     return (
         <View style={styles.container}>
             {/*CHART KEYS*/}
-            {pieData.map((data, index) => (
+            {pieData?.map((data, index) => (
                 <PieChartKey
+                    total={total}
                     isExcluded={excludedChartData.includes(data.id)}
                     id={data.id}
                     onPress={onPress}
@@ -29,6 +32,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         gap: 10,
+        flex: 1,
     },
     chartKey: {
         height: 10,
