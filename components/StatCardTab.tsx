@@ -6,7 +6,7 @@ type Props = {
     title: string;
     value: number;
     suffix?: string;
-    prefix?: string
+    prefix?: string | boolean
 }
 
 export default function StatCardTab({ title, value, suffix, prefix }: Props) {

@@ -16,7 +16,7 @@ import Footer from "../ui/Footer";
 export default function ChartList() {
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
     const bottom = useBottomTabOverflow();
-    const [activeTab, setActiveTab] = useState<number>(1)
+    const [activeTab, setActiveTab] = useState<number>(4)
     const [dashTabs, setDashTabs] = useState<any[]>([])
 
     useEffect(() => {

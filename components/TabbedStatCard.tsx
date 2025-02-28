@@ -9,9 +9,10 @@ import SkeletonLoader from "./ui/loaders/SkeletonLoader";
 type Props = {
     stats: any[];
     isLoading: boolean;
+    prefix: string | boolean;
 }
 
-export default function TabbedStatCard({ stats, isLoading = true }: Props) {
+export default function TabbedStatCard({ prefix = '$ ', stats, isLoading = true }: Props) {
     const [activeTab, setActiveTab] = useState({})
 
     function switchTab(tab: {}) {
@@ -53,7 +54,7 @@ export default function TabbedStatCard({ stats, isLoading = true }: Props) {
                 {/*{STAT_CARD_DATA.map((tab, index) => (*/}
                 {/*    <StatCardTab title={tab.title} value={tab.value.toLocaleString()} suffix={'MOR'} key={index} />*/}
                 {/*))}*/}
-                {activeTab && <StatCardTab title={activeTab?.title} value={transformNumber(activeTab?.value)} prefix={'$ '} />}
+                {activeTab && <StatCardTab title={activeTab?.title} value={transformNumber(activeTab?.value)} prefix={prefix} />}
             </View>
         </View>
     )
