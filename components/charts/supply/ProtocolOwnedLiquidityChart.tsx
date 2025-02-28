@@ -7,13 +7,18 @@ import { ProgressChart } from "react-native-chart-kit";
 import { generateUniqueColors } from "@/utils/utils";
 import axios from 'axios'
 import { loadChartData } from "@/backend/services/charts";
+import SkeletonLoader from "@/components/ui/loaders/SkeletonLoader";
 
 const { width: screenWidth } = Dimensions.get('window')
 
 export default function ProtocolOwnedLiquidityChart() {
     const [currentPieData, setCurrentPieData] = useState<any>([])
     const [legendData, setLegendData] = useState<any>([])
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 3000)
+    }, [])
 
     // const data = [
     //     {
@@ -72,6 +77,10 @@ export default function ProtocolOwnedLiquidityChart() {
         setLegendData(dataWithColors)
         return dataWithColors
     }
+
+    if (isLoading) return (
+        <SkeletonLoader />
+    )
 
     return (
         <View style={styles.container}>

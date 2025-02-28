@@ -5,9 +5,19 @@ import { StyleSheet, Text, View } from "react-native";
 import PieChartKeys from "../pie/PieChartKeys";
 import CenterLabel from "../pie/CenterLabel";
 import { PieChart } from "react-native-gifted-charts";
+import SkeletonLoader from "@/components/ui/loaders/SkeletonLoader";
 
 export default function PowerMultiplierDistributionChart() {
     const [apiData, setApiData] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 4000)
+    }, [])
+
+    if (isLoading) return (
+        <SkeletonLoader />
+    )
 
     useEffect(() => {
         const getChartData = async () => {

@@ -1,6 +1,18 @@
+import SkeletonLoader from "@/components/ui/loaders/SkeletonLoader";
+import { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 export default function TotalCurrentCapitalCharts() {
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 4000)
+    }, [])
+
+    if (isLoading) return (
+        <SkeletonLoader />
+    )
+
     return (
         <View style={styles.container}>
             <Text>Total and Current Capital Charts</Text>

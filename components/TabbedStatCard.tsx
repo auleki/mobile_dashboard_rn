@@ -1,18 +1,15 @@
-﻿import { Pressable, StyleSheet, Text, View, Dimensions } from "react-native";
+﻿import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Colors } from "@/constants/Colors";
 import StatCardTab from "@/components/StatCardTab";
 import StatCardTabHead from "@/components/StatCardTabHead";
 import { useEffect, useState } from "react";
-import { Skeleton } from '@rneui/themed';
-import { LinearGradient } from 'expo-linear-gradient';
-import { transformNumber } from "@/utils/utils";
+import { STAT_CARD_DATA } from "@/utils/dataBank";
 import SkeletonLoader from "./ui/loaders/SkeletonLoader";
 
 type Props = {
     stats: any[];
     isLoading: boolean;
 }
-
-const { width } = Dimensions.get('screen')
 
 export default function TabbedStatCard({ stats, isLoading = true }: Props) {
     const [activeTab, setActiveTab] = useState({})
@@ -28,6 +25,11 @@ export default function TabbedStatCard({ stats, isLoading = true }: Props) {
     if (isLoading) return (
         <SkeletonLoader />
     )
+
+    function transformNumber(val: string) {
+        const roundedUp = Number(val).toFixed(2)
+        return Number(roundedUp).toLocaleString() // Add commas to the number
+    }
 
     return (
         <View style={styles.container}>
@@ -48,6 +50,9 @@ export default function TabbedStatCard({ stats, isLoading = true }: Props) {
                 )}
             </View>
             <View style={styles.tabContent}>
+                {/*{STAT_CARD_DATA.map((tab, index) => (*/}
+                {/*    <StatCardTab title={tab.title} value={tab.value.toLocaleString()} suffix={'MOR'} key={index} />*/}
+                {/*))}*/}
                 {activeTab && <StatCardTab title={activeTab?.title} value={transformNumber(activeTab?.value)} prefix={'$ '} />}
             </View>
         </View>
@@ -72,6 +77,5 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: "center",
         gap: 10,
-    },
-
+    }
 })

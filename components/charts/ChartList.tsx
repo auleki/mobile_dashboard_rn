@@ -60,7 +60,7 @@ export default function ChartList() {
 
 const styles = StyleSheet.create({
     container: {
-        gap: 25
+        gap: 25,
     },
     chartContainer: {
         gap: 50
