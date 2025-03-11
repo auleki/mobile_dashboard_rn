@@ -12,11 +12,10 @@ import SkeletonLoader from "@/components/ui/loaders/SkeletonLoader";
 
 export default function MORHoldersChart() {
     const [apiData, setApiData] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const getChartData = async () => {
-            setIsLoading(true)
             const data = await loadChartData('mor_holders_by_range')
             setApiData(data)
             setIsLoading(false)
@@ -39,11 +38,6 @@ export default function MORHoldersChart() {
         initialChartData: apiData,
         chartType: 'mor-holders'
     })
-
-
-    useEffect(() => {
-        console.log({ currentChartData })
-    }, [currentChartData])
 
     // const { statTabs } = useTabbedStats(STAT_CARD_DATA)
 

@@ -12,7 +12,7 @@ import { loadChartData } from "@/backend/services/charts";
 export default function SupplyCharts() {
     const [supplyCapData, setSupplyCapData] = useState<any[]>([])
     const [positionsData, setPositionsData] = useState<any[]>([])
-    const [capIsLoading, setCapIsLoading] = useState<boolean>(false)
+    const [capIsLoading, setCapIsLoading] = useState<boolean>(true)
     const [liquidityIsLoading, setLiquidityIsLoading] = useState<boolean>(false)
 
     async function initializeSupplyCharts() {

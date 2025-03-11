@@ -1,8 +1,10 @@
 import { loadChartData } from "@/backend/services/charts";
 import StatCardTabHead from "@/components/StatCardTabHead";
 import SimpleTab from "@/components/tabs/common/SimpleTab";
+import SkeletonLoader from "@/components/ui/loaders/SkeletonLoader";
 import useSimpleTab from "@/hooks/useSimpleTab";
 import { TabDataType } from "@/types/charts";
+import { transformNumber } from "@/utils/utils";
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { VictoryChart, VictoryLine, VictoryTheme, } from 'victory-native'
@@ -46,16 +48,18 @@ export default function LockedBurnedMORChart() {
     const [activeChart, setActiveChart] = useState<null | number>(null)
     const [chartCurrentTab, setChartCurrentTab] = useState<TabDataType | null>(null)
     const { activeTab, switchActiveTab, tabs, updateTabs, currentTab } = useSimpleTab(TABS_DATA)
+    const [isLoading, setIsLoading] = useState(true)
 
     function formatText(_activeTab: number | null, _value: number) {
         if (!_activeTab) return "No Active Tab"
         const _currentTab = tabs.filter(tab => tab.id === _activeTab)[0]
-        return `Total ${_currentTab.tabTitle} MOR till now: ${_value} MOR`
+        return `Total ${_currentTab.tabTitle} MOR till now: ${transformNumber(_value.toString())} MOR`
     }
 
     useEffect(() => {
         const getChartData = async () => {
             try {
+
                 const result = await loadChartData('locked_and_burnt_mor')
 
                 const updatedTabs: TabDataType[] = tabs.map(tab => {
@@ -97,6 +101,8 @@ export default function LockedBurnedMORChart() {
                 }
             } catch (error) {
                 console.log('Error while loading Locked & Burned Chart', { error })
+            } finally {
+                setIsLoading(false)
             }
         }
 
@@ -122,6 +128,10 @@ export default function LockedBurnedMORChart() {
         const splicedData = _currentChartData.splice(0, 5)
         setCurrentChartData(splicedData)
     }
+
+    if (isLoading) return (
+        <SkeletonLoader />
+    )
 
     return (
         <View style={styles.container}>

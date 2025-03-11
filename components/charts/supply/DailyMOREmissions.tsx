@@ -1,4 +1,5 @@
 import { loadChartData } from "@/backend/services/charts";
+import SkeletonLoader from "@/components/ui/loaders/SkeletonLoader";
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { VictoryChart, VictoryLine, VictoryTheme } from "victory-native";
@@ -6,6 +7,11 @@ import { VictoryChart, VictoryLine, VictoryTheme } from "victory-native";
 export default function DailyMOREmissions() {
     const [chartData, setChartData] = useState<{}[]>([])
     const [currentChartData, setCurrentChartData] = useState<{}[]>([])
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 3000)
+    }, [])
 
     useEffect(() => {
         const getChartData = async () => {
@@ -25,6 +31,10 @@ export default function DailyMOREmissions() {
         getChartData()
     }, [])
 
+    if (isLoading) return (
+        <SkeletonLoader />
+    )
+
     return (
         <View style={styles.container}>
             <Text style={{ fontWeight: 600 }}>Daily MOR</Text>
@@ -43,6 +53,7 @@ export default function DailyMOREmissions() {
                     }}
                 />
             </VictoryChart>
+            <Text style={{ color: '#999' }}>Visualization of Daily MOR emissions over time</Text>
         </View>
     )
 }

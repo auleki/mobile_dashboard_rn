@@ -13,7 +13,6 @@ type Props = {
 }
 
 export default function DashboardTabs({ onTabClick, activeTabId, tabs }: Props) {
-
     function handleTabClick(tabId: number) {
         onTabClick(tabId)
     }
