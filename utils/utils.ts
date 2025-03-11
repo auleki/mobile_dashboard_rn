@@ -205,3 +205,7 @@ export function transformNumber(val: string) {
     const roundedUp = Number(val).toFixed(2)
     return Number(roundedUp).toLocaleString()
 }
+
+export function isObjectEmpty(obj: {}) {
+    return Object.keys(obj).length === 0
+}

@@ -2,8 +2,6 @@ import { StyleSheet, View, Text } from "react-native";
 import ContributorStats from "./ContributorStats";
 import CodeRewardsDistributionChart from "./CodeRewardsDistributionChart";
 
-
-
 export default function CodeCharts() {
     return (
         <View style={styles.container}>

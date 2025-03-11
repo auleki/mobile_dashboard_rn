@@ -28,10 +28,6 @@ export default function ContributorStats() {
     const [codeMetricsData, setCodeMetricsData] = useState<ICodeMetrics>({} as ICodeMetrics)
     const [tabbedData, setTabbedData] = useState<[]>([])
 
-    // useEffect(() => {
-    //     setTimeout(() => setIsLoading(false), 4000)
-    // }, [])
-
     function formatCodeTabs(tabs: {}[]) {
         const updatedTabs = tabs.map((tab, idx) => {
             return {
@@ -85,15 +81,10 @@ const styles = StyleSheet.create({
         gap: 20,
         paddingVertical: 20,
         paddingHorizontal: 10,
-        // borderWidth: 2,
-
-        // borderColor: "#ddd",
-        // borderRadius: 13,
         justifyContent: 'center'
     },
     infoTab: {
         flexDirection: 'column',
         width: '100%'
-
     }
 })

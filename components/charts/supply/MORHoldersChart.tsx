@@ -39,11 +39,6 @@ export default function MORHoldersChart() {
         chartType: 'mor-holders'
     })
 
-
-    useEffect(() => {
-        console.log({ currentChartData })
-    }, [currentChartData])
-
     // const { statTabs } = useTabbedStats(STAT_CARD_DATA)
 
     if (isLoading) return (
