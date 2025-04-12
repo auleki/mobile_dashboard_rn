@@ -70,6 +70,8 @@ export default function CodeRewardsDistributionChart() {
         <SkeletonLoader />
     )
 
+    // useEffect(() => console.log({currentChartData}), [])
+
     return (
         <View style={styles.container}>
             <View style={{ alignItems: 'center', gap: 5 }}>
@@ -88,7 +90,9 @@ export default function CodeRewardsDistributionChart() {
                 ))}
 
             </View> */}
-            <PieChart
+            {
+                Object.keys(currentChartData).length > 0 ? (
+                    <PieChart
                 donut
                 innerRadius={95}
                 centerLabelComponent={() => (
@@ -99,15 +103,27 @@ export default function CodeRewardsDistributionChart() {
                 )}
                 data={currentChartData}
             />
+                ) : (
+                    <View>
+                        <Text>No Pie Data</Text>
+                    </View>
+                )
+            }
             {/* LEGEND CONTAINER */}
             <View style={styles.legendContainer}>
                 <Text style={styles.chartDetails}>LEGEND</Text>
-                <PieChartKeys
+                {(pieChartKeysData && Object?.keys(pieChartKeysData)?.length )> 0 ? (
+                    <PieChartKeys
                     total={fixedTotal}
                     onPress={toggleDataInclusion}
                     pieData={pieChartKeysData}
                     excludedChartData={excludedChartData}
                 />
+                ) : (
+                    <View>
+                        <Text>No keys data</Text>
+                    </View>
+                )}
             </View>
         </View >
     )

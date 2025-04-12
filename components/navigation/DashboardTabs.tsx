@@ -23,6 +23,7 @@ export default function DashboardTabs({ onTabClick, activeTabId, tabs }: Props) 
                 {/* TABS */}
                 {tabs.map(tab => (
                     <DashTab
+                        locked={tab.locked}
                         onClick={handleTabClick}
                         key={tab.id}
                         id={tab.id}

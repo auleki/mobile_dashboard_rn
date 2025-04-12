@@ -19,18 +19,20 @@ export default function PieChartKey({ range = '100-200', color, onPress, id, isE
     return (
         <Pressable onPress={() => onPress(id)}>
             <View style={{ ...styles.keyContainer, backgroundColor: `${isExcluded ? '#000' : '#ddd'}` }}>
-                <View style={{ backgroundColor: color, ...styles.chartKey, alignSelf: 'center' }} />
-
-                <View style={styles.labelContainer}>
-                    <Text
-                        style={{
-                            ...styles.keyLabel,
-                            color: isExcluded ? '#1a1a1a' : '#333',
-                            textDecorationLine: `${isExcluded ? 'line-through' : 'none'}`
-                        }}>
-                        {thousandTextParser(range)}<Text style={{ fontSize: 10, color: "#767676FF" }}>(MOR)</Text>
-                    </Text>
+                 <View style={styles.alignKey}> 
+                    <View style={{ backgroundColor: color, ...styles.chartKey, alignSelf: 'center' }} />
+                    <View style={styles.labelContainer}>
+                        <Text
+                            style={{
+                                ...styles.keyLabel,
+                                color: isExcluded ? '#1a1a1a' : '#333',
+                                textDecorationLine: `${isExcluded ? 'line-through' : 'none'}`
+                            }}>
+                            {thousandTextParser(range)}<Text style={{ fontSize: 10, color: "#767676FF" }}>(MOR)</Text>
+                        </Text>
+                    </View>
                 </View>
+               
 
 
                 <Text style={{
@@ -38,7 +40,13 @@ export default function PieChartKey({ range = '100-200', color, onPress, id, isE
                     color: isExcluded ? '#1a1a1a' : '#1a1a1a',
                     textDecorationLine: `${isExcluded ? 'line-through' : 'none'}`
                 }}>
-                    {value?.toLocaleString()} <Text style={{ fontSize: 14, fontWeight: '400', color: "#767676FF" }}>({calculatePercentage(Number(value), Number(total))}%)</Text><Text style={{ fontSize: 10, fontWeight: '400', color: "#767676FF" }}>Holders</Text>
+                    <Text>
+                        {value?.toLocaleString()} 
+                    </Text>
+                    <Text style={{ fontSize: 14, fontWeight: '400', color: "#767676FF" }}>
+                        ({calculatePercentage(Number(value), Number(total))}%)
+                    </Text>
+                    <Text style={{ fontSize: 10, fontWeight: '400', color: "#767676FF" }}>Holders</Text>
                 </Text>
             </View>
         </Pressable>
@@ -52,6 +60,11 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         color: "#fff",
         alignItems: 'center'
+    },
+    alignKey: {
+        flexDirection: 'row ',
+        alignItems: 'center',
+        gap: 40
     },
     labelContainer: {
         // label container styles
@@ -75,6 +88,10 @@ const styles = StyleSheet.create({
     },
     keyValue: {
         fontWeight: 'bold',
-        color: "#fff"
+        color: "#fff",
+        gap: 10,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        display: 'flex'
     }
 })

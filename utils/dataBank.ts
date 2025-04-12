@@ -4,21 +4,25 @@ import { BurnedLockedTabsType } from "@/types/charts";
 export const DASHBOARD_TABS = [
     {
         title: 'Supply',
+        locked: false,
         pathname: DASH_CHART_SECTIONS.SUPPLY,
         id: 1,
     },
     {
         title: 'Staking',
+        locked: true,
         pathname: DASH_CHART_SECTIONS.STAKING,
         id: 2,
     },
     {
         title: 'Capital',
+        locked: true,
         pathname: DASH_CHART_SECTIONS.CAPITAL,
         id: 3,
     },
     {
         title: 'Code',
+        locked: true,
         pathname: DASH_CHART_SECTIONS.CODE,
         id: 4,
     }

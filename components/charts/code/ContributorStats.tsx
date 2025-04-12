@@ -33,15 +33,15 @@ export default function ContributorStats() {
             return {
                 ...tab,
                 id: +idx,
-                value: codeMetricsData[tab.key]
+                value: codeMetricsData[tab.key] ?? null
             }
         })
-        setTabbedData(updatedTabs)
+        updatedTabs && setTabbedData(updatedTabs)
         console.log({ changedMetrics: updatedTabs });
     }
 
     useEffect(() => {
-        if (Object.keys(codeMetricsData).length !== 0) {
+        if (codeMetricsData && Object.keys(codeMetricsData).length !== 0) {
             formatCodeTabs(CODE_TABS)
         }
     }, [codeMetricsData])

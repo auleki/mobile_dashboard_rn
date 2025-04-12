@@ -1,4 +1,4 @@
-import Animated, { useAnimatedRef } from "react-native-reanimated";
+﻿import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useBottomTabOverflow } from "../ui/TabBarBackground";
 import { StyleSheet, Text, View } from "react-native";
 import SupplyCharts from "./supply";
@@ -16,7 +16,7 @@ import Footer from "../ui/Footer";
 export default function ChartList() {
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
     const bottom = useBottomTabOverflow();
-    const [activeTab, setActiveTab] = useState<number>(4)
+    const [activeTab, setActiveTab] = useState<number>(1)
     const [dashTabs, setDashTabs] = useState<any[]>([])
 
     useEffect(() => {

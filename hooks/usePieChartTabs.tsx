@@ -14,7 +14,7 @@ export default function usePieChartTabs({ chartType, initialChartData }: Props) 
     const [chartData, setChartData] = useState<{} | []>(initialChartData)
     const [currentChartData, setCurrentChartData] = useState<{} | any[]>([])
     const [formattedData, setFormattedData] = useState<PieDataType[]>([])
-    const [activePieDataTab, setActivePieDataTab] = useState({})
+    const [activePieDataTab, setActivePieDataTab] = useState<{} | null>(null)
     const [placeholderValue, setPlaceholderValue] = useState(0)
     const [fixedTotal, setFixedTotal] = useState<number>(0)
     const [pieChartKeysData, setPieChartKeysData] = useState<{ tabTitle: string, slug: string }[]>([])
@@ -30,7 +30,7 @@ export default function usePieChartTabs({ chartType, initialChartData }: Props) 
 
 
     useEffect(() => {
-        if ((!activePieDataTab || Object.keys(activePieDataTab).length === 0) && chartType !== 'code-rewards') {
+        if ((!activePieDataTab || Object?.keys(activePieDataTab).length === 0) && chartType !== 'code-rewards') {
             return; // Return early if activePieDataTab is empty or null/undefined
         }
         createPieChartKeys(initialChartData)
@@ -38,7 +38,7 @@ export default function usePieChartTabs({ chartType, initialChartData }: Props) 
 
 
     function createPieChartKeys(_chartData: {}) {
-        const _keys = Object.keys(_chartData)
+        const _keys = _chartData && Object?.keys(_chartData)
         if (_keys.length !== 0) {
             if (chartType === CHART_TYPES.MOR_HOLDERS || chartType === CHART_TYPES.POWER_MULTIPLIER) {
                 formatDataForPieChart(_chartData[activePieDataTab?.title])
@@ -52,7 +52,7 @@ export default function usePieChartTabs({ chartType, initialChartData }: Props) 
 
     function createPieDataTabs(_chartData: {}) {
         if (chartType === CHART_TYPES.MOR_HOLDERS) {
-            const keys = Object.keys(_chartData)
+            const keys = Object?.keys(_chartData)
             const _tabs = keys.map((key, index) => ({ title: key, id: ++index }))
             setPieDataTabs(_tabs)
             setActivePieDataTab(_tabs[0])

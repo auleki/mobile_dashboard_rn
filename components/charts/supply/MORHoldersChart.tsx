@@ -48,10 +48,10 @@ export default function MORHoldersChart() {
     return (
         <View style={styles.container}>
             <Text style={styles.chartTitle}>Number of MOR Holders By Range</Text>
-            {/* <Text style={styles.chartDetails}>
+            <Text style={styles.chartDetails}>
                 Visualisation of PoL Values in USD for MOR Arbitrum Pool, Base Pool and both pools combined.
                 Total Value: $4,018,950.53
-            </Text> */}
+            </Text>
             <View style={styles.dataTabs}>
                 {pieDataTabs.map((dataTab: { id: number, title: string }, index) => (
                     <Text

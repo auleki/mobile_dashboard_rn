@@ -109,6 +109,22 @@ export default function LockedBurnedMORChart() {
         getChartData()
     }, [])
 
+    const traverseChartData = (direction: 'left' | 'right') => {
+        if (direction === 'left') {
+            // if
+
+            // disable button if the pointer is less than or equal to 5
+        }
+
+        if (direction === 'right') {
+            // go 5 rows over and start from there
+
+            // if the length of what is left is less than 5, 
+            // switch pointer to start from the end of the 
+            // array and pick last five rows
+        }
+    }
+
     const switchTab = (id: number) => {
         switchActiveTab(id)
         const _currentTab = tabs.filter(tab => tab.id === activeTab)[0]
@@ -160,9 +176,21 @@ export default function LockedBurnedMORChart() {
                 />
             </VictoryChart>
 
-            <Text style={{ color: '#999' }}>
-                {currentChartInfo.total !== undefined && formatText(activeTab, Number(currentChartInfo.total).toFixed(2))}
-            </Text>
+           <View>
+            <View style={styles.chartButtons}>
+                <Pressable>
+                    <Text>Left</Text>
+                </Pressable>
+
+                <Pressable>
+                    <Text>Right</Text>
+                </Pressable>
+            </View>
+                
+                <Text style={{ color: '#999' }}>
+                    {currentChartInfo.total !== undefined && formatText(activeTab, Number(currentChartInfo.total).toFixed(2))}
+                </Text>
+            </View>
         </View>
     )
 }
@@ -178,4 +206,9 @@ const styles = StyleSheet.create({
         borderRadius: 13,
         justifyContent: 'center'
     },
+    chartButtons: {
+        flexDirection: 'row',
+        gap: 10,
+        justifyContent: 'center'
+    }
 })
