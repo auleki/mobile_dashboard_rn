@@ -72,13 +72,15 @@ const styles = StyleSheet.create({
     keyContainer: {
         cursor: 'pointer',
         display: 'flex',
+        borderWidth: 2,
+
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 10,
         width: 300,
         flex: 3,
-        backgroundColor: "#fff",
+        backgroundColor: "crimson",
         borderRadius: 5,
         padding: 5,
     },

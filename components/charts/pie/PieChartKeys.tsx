@@ -1,4 +1,4 @@
-﻿import { StyleSheet, Text, View } from "react-native";
+﻿import { StyleSheet, Text, View, ScrollView } from "react-native";
 import PieChartKey from "@/components/charts/pie/PieChartKey";
 import { PieDataType } from "@/types/charts";
 import { PieChartKeysType } from "@/types/components";
@@ -7,7 +7,7 @@ export default function PieChartKeys({ pieData, onPress, excludedChartData, tota
     // console.log({ pieData });
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             {/*CHART KEYS*/}
             {pieData?.map((data, index) => (
                 <PieChartKey
@@ -20,19 +20,16 @@ export default function PieChartKeys({ pieData, onPress, excludedChartData, tota
                     color={data.color}
                     key={index} />
             ))}
-        </View>
+
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        gap: 10,
-        flex: 1,
+        maxHeight: 250,
+        width: '100%',
+        gap: 10
     },
     chartKey: {
         height: 10,

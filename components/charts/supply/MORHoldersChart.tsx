@@ -94,8 +94,10 @@ const styles = StyleSheet.create({
         gap: 20,
         paddingVertical: 20,
         paddingHorizontal: 10,
+        overflow: 'hidden',
         borderWidth: 2,
         borderColor: "#ddd",
+        paddingTop: '5%',
         borderRadius: 13,
         justifyContent: 'center'
     },

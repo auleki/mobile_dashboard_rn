@@ -29,7 +29,7 @@ export default function SupplyCharts() {
             ...stat,
             value: positionStats[stat.key]
         }))
-        console.log({ positionStats, formattedPositionData });
+        // console.log({ positionStats, formattedPositionData });
         setSupplyCapData(formattedSupplyStats)
         setPositionsData(formattedPositionData)
         setCapIsLoading(false)
@@ -43,15 +43,15 @@ export default function SupplyCharts() {
         <View style={styles.container}>
 
             {/* SUPPLY CAP */}
-            <TabbedStatCard
+            {/* <TabbedStatCard
                 isLoading={capIsLoading}
                 stats={supplyCapData}
-            />
+            /> */}
 
-            <TabbedStatCard
+            {/* <TabbedStatCard
                 isLoading={capIsLoading}
                 stats={positionsData}
-            />
+            /> */}
 
             <MORHoldersChart />
 
